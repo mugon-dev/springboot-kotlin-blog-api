@@ -5,19 +5,19 @@ import com.conny.blog.infrastructure.model.entity.BaseEntity
 import javax.persistence.*
 
 @Entity
-@Table(name = TableConstant.ROLE)
-open class RoleEntity constructor(
+@Table(name = TableConstant.CATEGORY)
+open class CategoryEntity constructor(
     @Column(length = 30, nullable = false)
     open var name: String? = null,
+
     @Column(length = 50)
     open var notes: String? = null,
 
-    @ManyToMany(
+    @OneToMany(
         fetch = FetchType.LAZY,
         cascade = [CascadeType.DETACH, CascadeType.REFRESH],
-        mappedBy = "roles"
+        mappedBy = "category"
     )
-    open var users: MutableList<UserEntity>? = mutableListOf(),
-
+    open var post: MutableList<PostEntity>? = mutableListOf(),
 
     ) : BaseEntity<Long>()
