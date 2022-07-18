@@ -2,9 +2,7 @@ package com.conny.blog.model.entity
 
 import com.conny.blog.constant.TableConstant
 import com.conny.blog.infrastructure.model.entity.BaseEntity
-import javax.persistence.Column
-import javax.persistence.Entity
-import javax.persistence.Table
+import javax.persistence.*
 
 @Entity
 @Table(name = TableConstant.ROLE)
@@ -13,7 +11,16 @@ open class RoleEntity constructor(
     open var name: String? = null,
     @Column(length = 50)
     open var notes: String? = null,
-) : BaseEntity<Long>() {
+
+    @ManyToMany(
+        fetch = FetchType.LAZY,
+        cascade = [CascadeType.DETACH, CascadeType.REFRESH],
+        mappedBy = "roles"
+    )
+    open var users: MutableList<UserEntity>? = mutableListOf(),
+
+
+    ) : BaseEntity<Long>() {
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
         if (other !is RoleEntity) return false

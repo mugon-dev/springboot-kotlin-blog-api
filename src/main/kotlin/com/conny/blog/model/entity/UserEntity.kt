@@ -3,9 +3,7 @@ package com.conny.blog.model.entity
 import com.conny.blog.constant.TableConstant
 import com.conny.blog.infrastructure.model.entity.BaseEntity
 import org.hibernate.Hibernate
-import javax.persistence.Column
-import javax.persistence.Entity
-import javax.persistence.Table
+import javax.persistence.*
 
 // open => 상속하게 해줄때 필요
 @Entity
@@ -22,6 +20,17 @@ open class UserEntity constructor(
 
     @Column(nullable = false)
     open var enabledUser: Boolean? = true,
+
+    @ManyToMany(
+        fetch = FetchType.LAZY,
+        cascade = [CascadeType.DETACH, CascadeType.REFRESH]
+    )
+    @JoinTable(
+        name = "userRole",
+        joinColumns = [JoinColumn(name = "userId")],
+        inverseJoinColumns = [JoinColumn(name = "roleId")]
+    )
+    open var roles: MutableList<RoleEntity>? = mutableListOf(),
 ) : BaseEntity<Long>() {
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
