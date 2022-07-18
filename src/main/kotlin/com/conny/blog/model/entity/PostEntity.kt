@@ -2,6 +2,7 @@ package com.conny.blog.model.entity
 
 import com.conny.blog.constant.TableConstant
 import com.conny.blog.infrastructure.model.entity.BaseEntity
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import javax.persistence.*
 
 @Entity
@@ -21,6 +22,7 @@ open class PostEntity constructor(
         cascade = [CascadeType.DETACH, CascadeType.REFRESH]
     )
     @JoinColumn(name = "categoryId")
+    @JsonIgnoreProperties("post")
     open var category: CategoryEntity? = null,
 
     @ManyToOne(
