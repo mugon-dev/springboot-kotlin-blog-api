@@ -1,0 +1,14 @@
+server:
+  port: 9090
+spring:
+  datasource:
+    url: jdbc:postgresql://${DB_HOST:192.168.0.117:${DB_PORT:5432}}/${DB_NAME:blog-db}
+    username: ${DB_USERNAME:root}
+    password: ${DB_PASSWORD:postgre123}
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    database: postgresql
+    hibernate:
+      ddl-auto: ${HIBERNATE_DDL:update}
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    show-sql: ${JPA_SHOW_SQL:true}
