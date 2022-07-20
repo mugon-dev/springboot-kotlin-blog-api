@@ -55,8 +55,9 @@ class FrontendPostController @Autowired constructor(
         return BodyResponse.success(PostResponse.toEntity(data), message = "Soft Delete one Successful")
     }
 
-    @GetMapping("/page")
+    @GetMapping("/all/{categoryId}")
     fun findAllAvailableByPage(
+        @PathVariable categoryId: Long,
         @RequestParam(required = false, defaultValue = "0") page: Int,
         @RequestParam(required = false, defaultValue = "20") size: Int,
         @RequestParam(required = false, defaultValue = "id") sort: String,
@@ -64,7 +65,7 @@ class FrontendPostController @Autowired constructor(
         @RequestParam(required = false, defaultValue = "false") paged: Boolean,
     ): ResponseEntity<Any> {
         val data = if (paged) {
-            postService.findAllAvailable(Pageable.unpaged()).map {
+            postService.findAllAvailable(categoryId, Pageable.unpaged()).map {
                 PostResponse.toEntity(it)
             }
         } else {
@@ -74,8 +75,14 @@ class FrontendPostController @Autowired constructor(
             } else {
                 Sort.by(sort).ascending()
             }
-            postService.findAllAvailable(PageRequest.of(page, size, sb)).map {
-                PostResponse.toEntity(it)
+            if (categoryId == 0L) {
+                postService.findAllAvailable(categoryId, PageRequest.of(page, size, sb)).map {
+                    PostResponse.toEntity(it)
+                }
+            } else {
+                postService.findAllAvailable(categoryId, PageRequest.of(page, size, sb)).map {
+                    PostResponse.toEntity(it)
+                }
             }
         }
         return BodyResponse.success(data, message = "Find all Successful")
