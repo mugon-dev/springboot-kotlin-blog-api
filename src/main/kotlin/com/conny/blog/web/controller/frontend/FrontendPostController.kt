@@ -1,6 +1,7 @@
 package com.conny.blog.web.controller.frontend
 
 import com.conny.blog.constant.RestUriConstant
+import com.conny.blog.infrastructure.model.response.BodyResponse
 import com.conny.blog.model.request.PostRequest
 import com.conny.blog.model.response.post.PostResponse
 import com.conny.blog.service.PostService
@@ -9,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.data.domain.PageRequest
 import org.springframework.data.domain.Pageable
 import org.springframework.data.domain.Sort
-import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 
@@ -27,36 +27,32 @@ class FrontendPostController @Autowired constructor(
         @RequestBody request: PostRequest
     ): ResponseEntity<Any> {
         val data = postService.create(request)
-        return ResponseEntity.status(HttpStatus.OK).body(PostResponse.toEntity(data))
+        return BodyResponse.success(PostResponse.toEntity(data), message = "Create Successful")
     }
 
     @PutMapping("/{id}")
     fun update(@PathVariable id: Long, @RequestBody request: PostRequest): ResponseEntity<Any> {
         val data = postService.update(id, request)
-        return ResponseEntity.status(HttpStatus.OK).body(PostResponse.toEntity(data))
+        return BodyResponse.success(PostResponse.toEntity(data), message = "Update Successful")
     }
 
     @GetMapping("/{id}")
     fun findOne(@PathVariable id: Long): ResponseEntity<Any> {
         val data = postService.findById(id)
             ?: throw Exception("Category not found")
-        return ResponseEntity.status(HttpStatus.OK).body(PostResponse.toEntity(data))
+        return BodyResponse.success(PostResponse.toEntity(data), message = "Find one Successful")
     }
 
     @DeleteMapping("/{id}")
     fun delete(@PathVariable id: Long): ResponseEntity<Any> {
         val data = postService.delete(id)
-        return ResponseEntity
-            .status(HttpStatus.OK)
-            .body(PostResponse.toEntity(data))
+        return BodyResponse.success(PostResponse.toEntity(data), message = "Delete one Successful")
     }
 
     @DeleteMapping("/soft/{id}")
     fun softDelete(@PathVariable id: Long): ResponseEntity<Any> {
         val data = postService.softDelete(id)
-        return ResponseEntity
-            .status(HttpStatus.OK)
-            .body(PostResponse.toEntity(data))
+        return BodyResponse.success(PostResponse.toEntity(data), message = "Soft Delete one Successful")
     }
 
     @GetMapping("/page")
@@ -82,9 +78,7 @@ class FrontendPostController @Autowired constructor(
                 PostResponse.toEntity(it)
             }
         }
-        return ResponseEntity
-            .status(HttpStatus.OK)
-            .body(data.content)
+        return BodyResponse.success(data, message = "Find all Successful")
 
     }
 }

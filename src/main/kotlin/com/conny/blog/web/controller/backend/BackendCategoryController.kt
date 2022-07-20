@@ -1,6 +1,7 @@
 package com.conny.blog.web.controller.backend
 
 import com.conny.blog.constant.RestUriConstant
+import com.conny.blog.infrastructure.model.response.BodyResponse
 import com.conny.blog.model.request.CategoryRequest
 import com.conny.blog.model.response.category.CategoryResponse
 import com.conny.blog.service.CategoryService
@@ -9,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.data.domain.PageRequest
 import org.springframework.data.domain.Pageable
 import org.springframework.data.domain.Sort
-import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 
@@ -27,32 +27,32 @@ class BackendCategoryController @Autowired constructor(
         @RequestBody request: CategoryRequest
     ): ResponseEntity<Any> {
         val data = categoryService.create(request)
-        return ResponseEntity.status(HttpStatus.OK).body(CategoryResponse.toEntity(data))
+        return BodyResponse.success(CategoryResponse.toEntity(data), message = "Create Successful")
     }
 
     @PutMapping("/{id}")
     fun update(@PathVariable id: Long, @RequestBody request: CategoryRequest): ResponseEntity<Any> {
         val data = categoryService.update(id, request)
-        return ResponseEntity.status(HttpStatus.OK).body(CategoryResponse.toEntity(data))
+        return BodyResponse.success(CategoryResponse.toEntity(data), message = "Update Successful")
     }
 
     @GetMapping("/{id}")
     fun findOne(@PathVariable id: Long): ResponseEntity<Any> {
         val data = categoryService.findById(id)
             ?: throw Exception("Category not found")
-        return ResponseEntity.status(HttpStatus.OK).body(CategoryResponse.toEntity(data))
+        return BodyResponse.success(CategoryResponse.toEntity(data), message = "Find One Successful")
     }
 
     @DeleteMapping("/{id}")
     fun delete(@PathVariable id: Long): ResponseEntity<Any> {
         val data = categoryService.delete(id)
-        return ResponseEntity.status(HttpStatus.OK).body(CategoryResponse.toEntity(data))
+        return BodyResponse.success(CategoryResponse.toEntity(data), message = "Delete One Successful")
     }
 
     @DeleteMapping("/soft/{id}")
     fun softDelete(@PathVariable id: Long): ResponseEntity<Any> {
         val data = categoryService.softDelete(id)
-        return ResponseEntity.status(HttpStatus.OK).body(CategoryResponse.toEntity(data))
+        return BodyResponse.success(CategoryResponse.toEntity(data), message = "Soft Delete One Successful")
     }
 
     @GetMapping("/page")
@@ -79,6 +79,6 @@ class BackendCategoryController @Autowired constructor(
                 CategoryResponse.toEntity(it)
             }
         }
-        return ResponseEntity.status(HttpStatus.OK).body(data.content)
+        return BodyResponse.success(data, message = "Find All Successful")
     }
 }
