@@ -2,7 +2,7 @@ package com.conny.blog.web.controller.backend
 
 import com.conny.blog.constant.RestUriConstant
 import com.conny.blog.model.request.CategoryRequest
-import com.conny.blog.model.response.CategoryResponse
+import com.conny.blog.model.response.category.CategoryResponse
 import com.conny.blog.service.CategoryService
 import io.swagger.annotations.Api
 import org.springframework.beans.factory.annotation.Autowired

@@ -1,4 +1,4 @@
-package com.conny.blog.model.response
+package com.conny.blog.model.response.category
 
 import com.conny.blog.model.entity.CategoryEntity
 
