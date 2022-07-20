@@ -1,5 +1,6 @@
 package com.conny.blog.service.implemetation
 
+import com.conny.blog.exception.AlreadyExistsException
 import com.conny.blog.model.entity.CategoryEntity
 import com.conny.blog.model.request.CategoryRequest
 import com.conny.blog.repository.CategoryRepository
@@ -17,7 +18,7 @@ class CategoryServiceImpl @Autowired constructor(
 ) : CategoryService {
     override fun create(request: CategoryRequest): CategoryEntity? {
         if (existsByName(request.name!!))
-            throw Exception("Category name already exists")
+            throw AlreadyExistsException("Category name already exists")
         return categoryRepository.save(request.toEntity())
     }
 
@@ -26,7 +27,7 @@ class CategoryServiceImpl @Autowired constructor(
 
         if (data.name != request.name)
             if (existsByName(request.name!!))
-                throw Exception("Category name already exists")
+                throw AlreadyExistsException("Category name already exists")
         data.name = request.name ?: data.name
         data.notes = request.notes ?: data.notes
         return categoryRepository.save(data)
