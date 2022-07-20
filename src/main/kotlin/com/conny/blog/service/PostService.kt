@@ -1,7 +1,7 @@
 package com.conny.blog.service
 
 import com.conny.blog.model.entity.PostEntity
-import com.conny.blog.model.request.PostRequest
+import com.conny.blog.model.request.post.PostRequest
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import org.springframework.stereotype.Service

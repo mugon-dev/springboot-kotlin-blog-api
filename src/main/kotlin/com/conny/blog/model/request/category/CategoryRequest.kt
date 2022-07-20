@@ -1,4 +1,4 @@
-package com.conny.blog.model.request
+package com.conny.blog.model.request.category
 
 import com.conny.blog.model.entity.CategoryEntity
 

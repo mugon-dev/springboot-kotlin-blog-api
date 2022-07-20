@@ -1,7 +1,7 @@
 package com.conny.blog.service.implemetation
 
 import com.conny.blog.model.entity.PostEntity
-import com.conny.blog.model.request.PostRequest
+import com.conny.blog.model.request.post.PostRequest
 import com.conny.blog.repository.CategoryRepository
 import com.conny.blog.repository.PostRepository
 import com.conny.blog.repository.UserRepository

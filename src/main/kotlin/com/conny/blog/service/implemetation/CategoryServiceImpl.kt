@@ -2,7 +2,7 @@ package com.conny.blog.service.implemetation
 
 import com.conny.blog.exception.AlreadyExistsException
 import com.conny.blog.model.entity.CategoryEntity
-import com.conny.blog.model.request.CategoryRequest
+import com.conny.blog.model.request.category.CategoryRequest
 import com.conny.blog.repository.CategoryRepository
 import com.conny.blog.service.CategoryService
 import org.springframework.beans.factory.annotation.Autowired

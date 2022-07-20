@@ -2,7 +2,7 @@ package com.conny.blog.web.controller.frontend
 
 import com.conny.blog.constant.RestUriConstant
 import com.conny.blog.infrastructure.model.response.BodyResponse
-import com.conny.blog.model.request.PostRequest
+import com.conny.blog.model.request.post.PostRequest
 import com.conny.blog.model.response.post.PostResponse
 import com.conny.blog.service.PostService
 import io.swagger.annotations.Api

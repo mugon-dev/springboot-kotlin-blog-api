@@ -1,7 +1,7 @@
 package com.conny.blog.service
 
 import com.conny.blog.model.entity.CategoryEntity
-import com.conny.blog.model.request.CategoryRequest
+import com.conny.blog.model.request.category.CategoryRequest
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import org.springframework.stereotype.Service

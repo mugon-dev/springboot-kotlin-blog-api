@@ -2,6 +2,7 @@ package com.conny.blog.model.entity
 
 import com.conny.blog.constant.TableConstant
 import com.conny.blog.infrastructure.model.entity.BaseEntity
+import com.conny.blog.module.security.UserAuthDetails
 import com.fasterxml.jackson.annotation.JsonManagedReference
 import javax.persistence.*
 
@@ -40,4 +41,8 @@ open class UserEntity constructor(
     )
     @JsonManagedReference
     open var post: MutableList<PostEntity>? = mutableListOf(),
-) : BaseEntity<Long>()
+) : BaseEntity<Long>() {
+    fun getUserAuthDetails(): UserAuthDetails {
+        return UserAuthDetails(this)
+    }
+}

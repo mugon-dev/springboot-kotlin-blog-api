@@ -2,7 +2,7 @@ package com.conny.blog.web.controller.backend
 
 import com.conny.blog.constant.RestUriConstant
 import com.conny.blog.infrastructure.model.response.BodyResponse
-import com.conny.blog.model.request.CategoryRequest
+import com.conny.blog.model.request.category.CategoryRequest
 import com.conny.blog.model.response.category.AdminCategoryResponse
 import com.conny.blog.service.CategoryService
 import io.swagger.annotations.Api

@@ -1,4 +1,4 @@
-package com.conny.blog.model.request
+package com.conny.blog.model.request.post
 
 import com.conny.blog.model.entity.PostEntity
 
