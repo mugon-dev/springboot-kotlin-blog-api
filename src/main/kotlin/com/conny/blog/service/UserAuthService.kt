@@ -4,4 +4,6 @@ import org.springframework.security.core.userdetails.UserDetailsService
 import org.springframework.stereotype.Service
 
 @Service
-interface UserAuthService : UserDetailsService
+interface UserAuthService : UserDetailsService {
+    fun register()
+}
