@@ -45,7 +45,7 @@ class CategoryServiceImpl @Autowired constructor(
 
     override fun softDelete(id: Long): CategoryEntity? {
         val data = findById(id) ?: throw Exception("Category not found")
-        data.deleteAt = Date()
+        data.deletedAt = Date()
         return categoryRepository.save(data)
     }
 

@@ -33,5 +33,5 @@ abstract class BaseEntity<ID : Serializable> {
     open var updatedDate: Date? = null
 
     @Column
-    open var deleteAt: Date? = null
+    open var deletedAt: Date? = null
 }
