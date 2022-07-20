@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service
 
 @Service
 interface CategoryService {
-    fun create(request: CategoryEntity): CategoryEntity?
+    fun create(request: CategoryRequest): CategoryEntity?
 
     fun update(id: Long, request: CategoryRequest): CategoryEntity?
 

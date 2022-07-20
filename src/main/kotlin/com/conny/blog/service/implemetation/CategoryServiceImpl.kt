@@ -15,10 +15,10 @@ import java.util.*
 class CategoryServiceImpl @Autowired constructor(
     private val categoryRepository: CategoryRepository,
 ) : CategoryService {
-    override fun create(request: CategoryEntity): CategoryEntity? {
+    override fun create(request: CategoryRequest): CategoryEntity? {
         if (existsByName(request.name!!))
             throw Exception("Category name already exists")
-        return categoryRepository.save(request)
+        return categoryRepository.save(request.toEntity())
     }
 
     override fun update(id: Long, request: CategoryRequest): CategoryEntity? {

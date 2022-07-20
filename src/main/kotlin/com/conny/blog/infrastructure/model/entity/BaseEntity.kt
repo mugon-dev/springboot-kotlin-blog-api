@@ -4,6 +4,7 @@ import org.springframework.data.annotation.CreatedBy
 import org.springframework.data.annotation.CreatedDate
 import org.springframework.data.annotation.LastModifiedBy
 import org.springframework.data.annotation.LastModifiedDate
+import org.springframework.data.jpa.domain.support.AuditingEntityListener
 import java.io.Serializable
 import java.util.*
 import javax.persistence.*
@@ -13,6 +14,7 @@ import javax.persistence.*
 // 자식 클래스에 매핑 정보만 제공
 // 추상 클래스로 만드는 것을 권장
 @MappedSuperclass
+@EntityListeners(AuditingEntityListener::class)
 abstract class BaseEntity<ID : Serializable> {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -2,6 +2,7 @@ package com.conny.blog.model.entity
 
 import com.conny.blog.constant.TableConstant
 import com.conny.blog.infrastructure.model.entity.BaseEntity
+import com.fasterxml.jackson.annotation.JsonBackReference
 import javax.persistence.*
 
 @Entity
@@ -17,6 +18,7 @@ open class RoleEntity constructor(
         cascade = [CascadeType.DETACH, CascadeType.REFRESH],
         mappedBy = "roles"
     )
+    @JsonBackReference
     open var users: MutableList<UserEntity>? = mutableListOf(),
 
 

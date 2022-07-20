@@ -2,6 +2,7 @@ package com.conny.blog.model.entity
 
 import com.conny.blog.constant.TableConstant
 import com.conny.blog.infrastructure.model.entity.BaseEntity
+import com.fasterxml.jackson.annotation.JsonManagedReference
 import javax.persistence.*
 
 // open => 상속하게 해줄때 필요
@@ -29,6 +30,7 @@ open class UserEntity constructor(
         joinColumns = [JoinColumn(name = "userId")],
         inverseJoinColumns = [JoinColumn(name = "roleId")]
     )
+    @JsonManagedReference
     open var roles: MutableList<RoleEntity>? = mutableListOf(),
 
     @OneToMany(
@@ -36,5 +38,6 @@ open class UserEntity constructor(
         cascade = [CascadeType.DETACH, CascadeType.REFRESH],
         mappedBy = "user"
     )
+    @JsonManagedReference
     open var post: MutableList<PostEntity>? = mutableListOf(),
 ) : BaseEntity<Long>()

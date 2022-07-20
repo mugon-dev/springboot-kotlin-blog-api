@@ -1,12 +1,14 @@
 package com.conny.blog.web.controller.backend
 
 import com.conny.blog.constant.RestUriConstant
-import com.conny.blog.model.entity.CategoryEntity
 import com.conny.blog.model.request.CategoryRequest
+import com.conny.blog.model.response.CategoryResponse
 import com.conny.blog.service.CategoryService
 import io.swagger.annotations.Api
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.data.domain.PageRequest
 import org.springframework.data.domain.Pageable
+import org.springframework.data.domain.Sort
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
@@ -22,40 +24,61 @@ class BackendCategoryController @Autowired constructor(
 ) {
     @PostMapping
     fun create(
-        @RequestBody request: CategoryEntity
+        @RequestBody request: CategoryRequest
     ): ResponseEntity<Any> {
         val data = categoryService.create(request)
-        return ResponseEntity.ok(data)
+        return ResponseEntity.status(HttpStatus.OK).body(CategoryResponse.toEntity(data))
     }
 
     @PutMapping("/{id}")
     fun update(@PathVariable id: Long, @RequestBody request: CategoryRequest): ResponseEntity<Any> {
         val data = categoryService.update(id, request)
-        return ResponseEntity.status(HttpStatus.OK).body(data)
+        return ResponseEntity.status(HttpStatus.OK).body(CategoryResponse.toEntity(data))
     }
 
     @GetMapping("/{id}")
     fun findOne(@PathVariable id: Long): ResponseEntity<Any> {
         val data = categoryService.findById(id)
             ?: throw Exception("Category not found")
-        return ResponseEntity.status(HttpStatus.OK).body(data)
+        return ResponseEntity.status(HttpStatus.OK).body(CategoryResponse.toEntity(data))
     }
 
     @DeleteMapping("/{id}")
     fun delete(@PathVariable id: Long): ResponseEntity<Any> {
         val data = categoryService.delete(id)
-        return ResponseEntity.status(HttpStatus.OK).body(data)
+        return ResponseEntity.status(HttpStatus.OK).body(CategoryResponse.toEntity(data))
     }
 
     @DeleteMapping("/soft/{id}")
     fun softDelete(@PathVariable id: Long): ResponseEntity<Any> {
         val data = categoryService.softDelete(id)
-        return ResponseEntity.status(HttpStatus.OK).body(data)
+        return ResponseEntity.status(HttpStatus.OK).body(CategoryResponse.toEntity(data))
     }
 
     @GetMapping("/page")
-    fun findAllAvailableByPage(): ResponseEntity<Any> {
-        val data = categoryService.findAllAvailable(Pageable.ofSize(2))
+    fun findAllAvailableByPage(
+        @RequestParam(required = false, defaultValue = "0") page: Int,
+        @RequestParam(required = false, defaultValue = "20") size: Int,
+        @RequestParam(required = false, defaultValue = "id") sort: String,
+        @RequestParam(required = false, defaultValue = "desc") sortBy: String,
+        @RequestParam(required = false, defaultValue = "false") paged: Boolean,
+
+        ): ResponseEntity<Any> {
+        val data = if (paged) {
+            categoryService.findAllAvailable(Pageable.unpaged()).map {
+                CategoryResponse.toEntity(it)
+            }
+        } else {
+
+            val sb = if (sortBy == "desc") {
+                Sort.by(sort).descending()
+            } else {
+                Sort.by(sort).ascending()
+            }
+            categoryService.findAllAvailable(PageRequest.of(page, size, sb)).map {
+                CategoryResponse.toEntity(it)
+            }
+        }
         return ResponseEntity.status(HttpStatus.OK).body(data.content)
     }
 }
