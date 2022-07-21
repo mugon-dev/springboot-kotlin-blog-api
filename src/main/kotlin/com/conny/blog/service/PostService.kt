@@ -13,6 +13,7 @@ interface PostService {
     fun update(id: Long, request: PostRequest): PostEntity?
 
     fun findById(id: Long): PostEntity?
+    fun findByIdAndUserId(id: Long, userId: Long): PostEntity?
 
     fun delete(id: Long): PostEntity?
 

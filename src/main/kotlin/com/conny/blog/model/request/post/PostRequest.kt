@@ -7,7 +7,6 @@ data class PostRequest(
     var description: String? = null,
     var attachment: String? = null,
     var categoryId: String? = null,
-    var userId: String? = null,
 ) {
     fun toEntity(): PostEntity {
         return PostEntity(

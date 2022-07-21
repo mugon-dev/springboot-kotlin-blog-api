@@ -23,7 +23,7 @@ open class UserEntity constructor(
     open var enabledUser: Boolean? = true,
 
     @ManyToMany(
-        fetch = FetchType.LAZY,
+        fetch = FetchType.EAGER,
         cascade = [CascadeType.DETACH, CascadeType.REFRESH]
     )
     @JoinTable(

@@ -11,6 +11,7 @@ import org.springframework.data.domain.PageRequest
 import org.springframework.data.domain.Pageable
 import org.springframework.data.domain.Sort
 import org.springframework.http.ResponseEntity
+import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.web.bind.annotation.*
 
 @Api(
@@ -23,6 +24,7 @@ class FrontendPostController @Autowired constructor(
     private val postService: PostService,
 ) {
     @PostMapping
+    @PreAuthorize("""hasAnyRole("USER")""")
     fun create(
         @RequestBody request: PostRequest
     ): ResponseEntity<Any> {
@@ -31,6 +33,7 @@ class FrontendPostController @Autowired constructor(
     }
 
     @PutMapping("/{id}")
+    @PreAuthorize("""hasAnyRole("USER")""")
     fun update(@PathVariable id: Long, @RequestBody request: PostRequest): ResponseEntity<Any> {
         val data = postService.update(id, request)
         return BodyResponse.success(PostResponse.toEntity(data), message = "Update Successful")
@@ -44,6 +47,7 @@ class FrontendPostController @Autowired constructor(
     }
 
     @DeleteMapping("/{id}")
+    @PreAuthorize("""hasAnyRole("USER")""")
     fun delete(@PathVariable id: Long): ResponseEntity<Any> {
         val data = postService.delete(id)
         return BodyResponse.success(PostResponse.toEntity(data), message = "Delete one Successful")

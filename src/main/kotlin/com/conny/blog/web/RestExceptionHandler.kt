@@ -1,7 +1,9 @@
 package com.conny.blog.web
 
 import com.conny.blog.exception.AlreadyExistsException
+import com.conny.blog.exception.NotFoundException
 import com.conny.blog.exception.UserNotFoundException
+import com.conny.blog.exception.auth.InvalidCurrentUserException
 import com.conny.blog.infrastructure.model.response.BaseBodyResponse
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
@@ -48,6 +50,34 @@ class RestExceptionHandler : ResponseEntityExceptionHandler() {
             .body(
                 BaseBodyResponse(
                     status = HttpStatus.NOT_FOUND.value(),
+                    message = ex.message
+                )
+            )
+    }
+
+    @ExceptionHandler(NotFoundException::class)
+    fun handleNotFoundException(
+        ex: NotFoundException,
+    ): ResponseEntity<Any> {
+        return ResponseEntity
+            .status(HttpStatus.NOT_FOUND)
+            .body(
+                BaseBodyResponse(
+                    status = HttpStatus.NOT_FOUND.value(),
+                    message = ex.message
+                )
+            )
+    }
+
+    @ExceptionHandler(InvalidCurrentUserException::class)
+    fun handleInvalidCurrentUserException(
+        ex: InvalidCurrentUserException,
+    ): ResponseEntity<Any> {
+        return ResponseEntity
+            .status(HttpStatus.BAD_REQUEST)
+            .body(
+                BaseBodyResponse(
+                    status = HttpStatus.BAD_REQUEST.value(),
                     message = ex.message
                 )
             )

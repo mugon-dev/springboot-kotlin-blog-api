@@ -1,12 +1,11 @@
 package com.conny.blog.module.security
 
 import com.conny.blog.model.entity.UserEntity
-import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.security.core.GrantedAuthority
 import org.springframework.security.core.authority.SimpleGrantedAuthority
 import org.springframework.security.core.userdetails.UserDetails
 
-class UserAuthDetails @Autowired constructor(
+class UserAuthDetails constructor(
     private val user: UserEntity
 ) : UserDetails {
     fun getUser() = this.user
