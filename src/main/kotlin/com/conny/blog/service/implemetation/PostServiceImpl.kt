@@ -102,4 +102,14 @@ class PostServiceImpl @Autowired constructor(
     override fun findAllAvailable(categoryId: Long, pageable: Pageable): Page<PostEntity> {
         return postRepository.queryAllByCategoryIdAndDeletedAtIsNull(categoryId, pageable)
     }
+
+    override fun findMyPosts(pageable: Pageable): Page<PostEntity> {
+        val user = userAuthService.getCurrentUser()
+        return postRepository.queryAllByUserIdAndDeletedAtIsNull(user.id!!, pageable)
+    }
+
+    override fun findMyPosts(): MutableList<PostEntity> {
+        val user = userAuthService.getCurrentUser()
+        return postRepository.queryAllByUserIdAndDeletedAtIsNull(user.id!!)
+    }
 }

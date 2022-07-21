@@ -92,4 +92,32 @@ class FrontendPostController @Autowired constructor(
         return BodyResponse.success(data, message = "Find all Successful")
 
     }
+
+    @GetMapping("/my-posts")
+    @PreAuthorize("""hasAnyRole("USER")""")
+    fun findMyPosts(
+        @RequestParam(required = false, defaultValue = "0") page: Int,
+        @RequestParam(required = false, defaultValue = "20") size: Int,
+        @RequestParam(required = false, defaultValue = "id") sort: String,
+        @RequestParam(required = false, defaultValue = "desc") sortBy: String,
+        @RequestParam(required = false, defaultValue = "false") paged: Boolean,
+    ): ResponseEntity<Any> {
+        val data = if (paged) {
+            postService.findMyPosts().map {
+                PostResponse.toEntity(it)
+            }
+        } else {
+
+            val sb = if (sortBy == "desc") {
+                Sort.by(sort).descending()
+            } else {
+                Sort.by(sort).ascending()
+            }
+            postService.findMyPosts(PageRequest.of(page, size, sb)).map {
+                PostResponse.toEntity(it)
+            }
+        }
+        return BodyResponse.success(data, message = "Find all Successful")
+
+    }
 }

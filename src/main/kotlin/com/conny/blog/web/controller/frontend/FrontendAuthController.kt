@@ -8,10 +8,7 @@ import com.conny.blog.service.UserAuthService
 import io.swagger.annotations.Api
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.ResponseEntity
-import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.RequestBody
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.bind.annotation.*
 
 @Api(
     tags = ["Frontend Auth"],
@@ -29,6 +26,12 @@ class FrontendAuthController @Autowired constructor(
             UserResponse.toEntity(data),
             message = "Register Successful"
         )
+    }
+
+    @GetMapping("/me")
+    fun fetchMe(): ResponseEntity<Any> {
+        val data = userAuthService.getCurrentUser()
+        return BodyResponse.success(UserResponse.toEntity(data), message = "Fetch me Successful")
     }
 
     @PostMapping("login")
